@@ -56,13 +56,14 @@ class App extends Component {
     const {
       filter: { value },
     } = event.target.elements;
-    this.setState({
-      filter: value,
-      page: 1,
-      images: [],
-      error: false,
-      loading: false,
-    });
+    if (value !== this.state.filter)
+      this.setState({
+        filter: value,
+        page: 1,
+        images: [],
+        error: false,
+        loading: false,
+      });
   };
 
   pagination = event => {
