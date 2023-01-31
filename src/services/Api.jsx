@@ -1,6 +1,6 @@
 import axios from "axios";
 
-async function getImages(imageRequest, page) {
+async function getImages( imageRequest, page ) {
     return await axios
       .get("https://pixabay.com/api/", {
         params: {
