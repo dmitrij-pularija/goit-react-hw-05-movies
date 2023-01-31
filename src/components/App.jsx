@@ -17,41 +17,38 @@ const App = () => {
     error: false,
   });
   const [modal, setModal] = useState({ modalUrl: '', modalAlt: '' });
+  const { totalPage, page } = pages;
 
   useEffect(() => {
-    queryImages();
-  }, [filter, pages.page]);
-
-  const queryImages = async () => {
     setState(prevState => {
       return { ...prevState, loading: true };
     });
 
-    try {
-      const response = await getImages(filter, page);
-
-      setImages(
-        response.hits.map(image => ({
-          id: image.id,
-          webformatURL: image.webformatURL,
-          largeImageURL: image.largeImageURL,
-          tags: image.tags,
-        }))
+    getImages(filter, page)
+      .then(({ hits, totalHits }) => {
+        setPages(prevPages => {
+          return { ...prevPages, totalPage: Math.ceil(totalHits / 12) };
+        });
+        setImages(
+          hits.map(image => ({
+            id: image.id,
+            webformatURL: image.webformatURL,
+            largeImageURL: image.largeImageURL,
+            tags: image.tags,
+          }))
+        );
+      })
+      .catch(() => {
+        setState(prevState => {
+          return { ...prevState, error: true };
+        });
+      })
+      .finally(() =>
+        setState(prevState => {
+          return { ...prevState, loading: false };
+        })
       );
-
-      setPages(prevPages => {
-        return { ...prevPages, totalPage: Math.ceil(response.totalHits / 12) };
-      });
-    } catch (error) {
-      setState(prevState => {
-        return { ...prevState, error: true };
-      });
-    } finally {
-      setState(prevState => {
-        return { ...prevState, loading: false };
-      });
-    }
-  };
+  }, [filter, page]);
 
   const handleSubmit = event => {
     const {
@@ -91,7 +88,6 @@ const App = () => {
   };
 
   const { modalShow, loading, error } = state;
-  const { totalPage, page } = pages;
   const { modalUrl, modalAlt } = modal;
 
   return (
