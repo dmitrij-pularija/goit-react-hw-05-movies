@@ -54,10 +54,12 @@ const App = () => {
     const {
       filter: { value },
     } = event.target.elements;
-    if (value !== filter) setFilter(value);
+    if (value !== filter) {
+    setFilter(value);
     setImages([]);
     setPages({ page: 1, totalPage: 0 });
     setState({ modalShow: false, loading: false, error: false });
+    }
   };
 
   const pagination = event => {

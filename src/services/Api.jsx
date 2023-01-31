@@ -5,7 +5,7 @@ const getImages = (imageRequest, page) => {
     .get('https://pixabay.com/api/', {
       params: {
         key: '31279571-1cfba33362a16abb8b6f73723',
-        q: `${imageRequest}`,
+        q: `${imageRequest ? imageRequest : "ukraine"}`,
         lang: 'en',
         image_type: 'photo',
         orientation: 'horizontal',
