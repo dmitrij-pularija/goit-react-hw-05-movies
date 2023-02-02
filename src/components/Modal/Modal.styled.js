@@ -34,9 +34,15 @@ export const Close = styled.button`
   &:hover {
     transform: scale(1.05);
     border: 1px solid #f32013;
+    // color: #f32013;
+  // fill: #f32013;
+  // stroke: #f32013;
   }
 `;
 
 export const IconClose = styled.img`
   pointer-events: none;
+  // fill: #f32013;
+  // stroke: currentColor;
+  // fill: currentColor;
 `;

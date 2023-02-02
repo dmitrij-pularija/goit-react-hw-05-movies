@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
 import clear from '../../img/clear.svg';
 import search from '../../img/search.svg';
-import { Header, Input, Form, Button, Clear, Icon } from './Searchbar.styled';
+import { ReactComponent as Logo } from '../../img/film.svg';
+
+import { Header, Input, Form, Button, Clear, Icon, Name } from './Searchbar.styled';
 
 const Searchbar = ({ formSubmit }) => {
   const input = document.querySelector('input');
@@ -9,6 +11,7 @@ const Searchbar = ({ formSubmit }) => {
 
   return (
     <Header>
+      <Logo stroke='white' /><Name>Movies</Name>
       <Form
         autoComplete="off"
         onSubmit={event => {

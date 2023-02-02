@@ -9,7 +9,7 @@ export const Header = styled.header`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 0;
+  padding: 8px 50px;
   background-color: #b5daf4;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 `;
@@ -87,4 +87,14 @@ export const Clear = styled.button`
     fill: #212121;
     transform: scale(1.3);
   }
+`;
+
+export const Name = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 5px;
+  font-weight: 700;
+  font-size: 28px;
+  color: #ffffff;
 `;
