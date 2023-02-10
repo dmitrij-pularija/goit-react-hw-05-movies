@@ -6,7 +6,6 @@ const BASE_PATCH = 'https://api.themoviedb.org/3/';
 // const SEARCH_PATCH = 'https://api.themoviedb.org/3/search/movie';
 // const DETAILS_PATCH = 'https://api.themoviedb.org/3/movie/';
 // const PERSON_PATCH = 'https://api.themoviedb.org/3/person/';
-
 const getMovies = async (type, page, search) => {
   let path = BASE_PATCH + "genre/movie/list";
   const presettings = {
