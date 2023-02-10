@@ -8,9 +8,11 @@ const Trailer = ({src}) => {
         <>
     <iframe width="850" height="650" src={"https://www.youtube.com/embed/"+src}
     title="Video player" 
-    frameborder="0"
-    allow="autoplay; encrypted-media"
-    allowfullscreen ></iframe>
+    // frameborder="0"
+    // allow="autoplay; encrypted-media"
+    // allowfullscreen="true"
+    allow="fullscreen"
+    ></iframe>
         </>
         );
     };

@@ -37,9 +37,9 @@ const birthdayData = new Date(person.birthday);
       {person.place_of_birth && <Place><Param>Place of birth</Param><Value>{person.place_of_birth}</Value></Place>}
       </Info>
       </Personal>
-      <Biography>
-      {person.biography && <Param>Biography:</Param>}  
-      <Text>{person.biography}</Text></Biography>
+      {person.biography && <Biography>
+      <Param>Biography:</Param>  
+      <Text>{person.biography}</Text></Biography>}
     </Card>
     ) : <Card><Notification message={'Something went wrong, please try again.'}/></Card>}
     </>
