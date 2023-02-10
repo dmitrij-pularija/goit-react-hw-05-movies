@@ -1,54 +1,85 @@
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
+import { useRef, useState, useEffect } from "react";
+import { useNavigate, useLocation} from "react-router-dom";
+
 import clear from '../../img/clear.svg';
 import search from '../../img/search.svg';
-import { ReactComponent as Logo } from '../../img/film.svg';
+// import { ReactComponent as Logo } from '../../img/film.svg';
 
-import { Header, Input, Form, Button, Clear, Icon, Name } from './Searchbar.styled';
+import { Input, Form, Button, Clear, Icon } from './Searchbar.styled';
 
-const Searchbar = ({ formSubmit }) => {
-  const input = document.querySelector('input');
-  const clrBut = document.getElementById('clr');
+// const Searchbar = ({ formSubmit }) => {
+const Searchbar = () => {
+  const btnRef = useRef();
+  const inpRef = useRef();
+  const formRef = useRef();
 
+  const [filter, setFilter] = useState('');
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // useEffect(() => {
+  //   location.pathname.includes("movies") ? formRef.current.style.display = 'flex' : formRef.current.style.display = 'none';
+  // }, [location]);
+  useEffect(() => {
+    console.log(location.pathname);    
+    filter && (location.pathname.endsWith("movies")) && navigate(`/movies/?search=${filter}`);
+    (location.pathname.endsWith("movies") || location.pathname.endsWith("movies/")) ? formRef.current.style.display = 'flex' : formRef.current.style.display = 'none';
+  }, [filter,location, navigate]);
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    const {
+      filter: { value },
+    } = event.target.elements;
+    if (value !== filter) {
+    setFilter(value);
+    value && navigate(`/movies/?search=${value}`);
+    console.log(value, filter);
+  };
+  };
+
+  // const input = document.getElementById('filter');
+  // const clrBut = document.getElementById('clr');
   return (
-    <Header>
-      <Logo stroke='white' /><Name>Movies</Name>
+    // <Header>
+      // <Logo stroke='white' /><Name>Movies</Name>
       <Form
+        ref={formRef}
         autoComplete="off"
-        onSubmit={event => {
-          event.preventDefault();
-          formSubmit(event);
-        }}
+        onSubmit={handleSubmit}
       >
         <Input
+          ref={inpRef}
           name="filter"
           type="text"
           autoFocus
-          placeholder="Search images and photos"
+          placeholder="Search movies"
           onChange={() => {
-            if (input.value) clrBut.style.display = 'flex';
+            if (inpRef.current.value) btnRef.current.style.display = 'flex';
           }}
         />
         <Button type="submit">
           <Icon src={search} width="18px" />
         </Button>
         <Clear
-          id="clr"
+          ref={btnRef}
           type="button"
           onClick={() => {
-            input.value = '';
-            clrBut.style.display = 'none';
+            inpRef.current.value = '';
+            btnRef.current.style.display = 'none';
           }}
           title="Сlick to clear filter"
         >
           <Icon src={clear} width="25px" />
         </Clear>
       </Form>
-    </Header>
+    // </Header>
   );
 };
 
-Searchbar.propTypes = {
-  formSubmit: PropTypes.func.isRequired,
-};
+// Searchbar.propTypes = {
+//   formSubmit: PropTypes.func.isRequired,
+// };
 
 export default Searchbar;

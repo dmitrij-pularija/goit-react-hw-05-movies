@@ -1,0 +1,169 @@
+import { useState, useEffect } from 'react';
+import Modal from './Modal/Modal';
+import Loader from './Loader/Loader';
+import { getMovies, getGenres } from '../services/Api';
+import Buttons from './Buttons/Buttons';
+import Searchbar from './Searchbar/Searchbar';
+import Notification from './Notification/Notification';
+// import ImageGallery from './ImageGallery/ImageGallery';
+
+const App = () => {
+  
+  const [genres, setGenres] = useState([]);
+  const [movies, setMovie] = useState([]);
+  const [filter, setFilter] = useState('');
+  const [pages, setPages] = useState({ page: 1, totalPage: 0 });
+  const [state, setState] = useState({
+    modalShow: false,
+    loading: false,
+    error: false,
+  });
+  const [modal, setModal] = useState({ modalUrl: '', modalAlt: '' });
+  const { totalPage, page } = pages;
+  
+  useEffect(() => {
+    getGenres().then((result) => {
+      setGenres(result.genres);
+    });
+  }, []);
+
+  // console.log(genres[0]);    
+//   const genresName = genre_ids => genre_ids.reduce((acc, id) => {
+//     // let genreToFind = genres.find(genre => genre.id === id);
+//     let genreToFind = genres.find(genre => Number(genre.id) === Number(id));
+//  let gn = genreToFind.name;
+//     console.log(gn);
+//     if (genreToFind) {
+//       acc.push(genreToFind.name);
+//     };
+//     return acc;
+//   }, []);
+
+  // const genresName = (genre_ids, genres) => {return genres.reduce((array, genre) => genre_ids.includes(genre.id) && array.push(genre.name), []);};
+  // const genresName = (genre_ids, genres) => {return genres.reduce(genre => console.log(genre));};
+  // const genresName = genre_ids => genres.reduce((genre => genre_ids.includes(Number(genre.id)) && genre.name), []);
+   
+
+  useEffect(() => {
+    setState(prevState => {
+      return { ...prevState, loading: true };
+    });
+    const genresName = genre_ids => genres.reduce((array, genre) => {genre_ids.includes(Number(genre.id)) && array.push(genre.name); return array;}, []);
+
+    getMovies(page)
+      .then(({ results, total_pages }) => {
+        setPages(prevPages => {
+          return { ...prevPages, totalPage: total_pages };
+        });
+        setMovie(
+          results.map(movie => ({
+            id: movie.id,
+            // poster: movie.backdrop_path,
+            poster: movie.poster_path,
+            title: movie.title,
+            release_date: movie.release_date,
+            genres: genresName(movie.genre_ids),
+            
+
+            // genres: movie.genre_ids,            
+            // genres: genres.map(genres => genres.find(genre => genre.id === movie.genre_ids)),
+            // genres: genres.map(genres => genres.find(genre => genre.id === movie.genre_ids)),
+            // genres: movie.genre_ids.map((mov, genres)=> genres.find(genre => genre.id === mov.genre_ids)),
+            // genres: movie.genre_ids.reduce((mov, genres) => {return (genres.id === mov.genre_ids) && genres.name;}),
+            // genres: genres.map(genre => movie.genre_ids.includes(genre.id) && genre.name),
+            // genres: genres.reduce((array, genre) => {if (movie.genre_ids.includes(genre.id)) {array.push(genre.name)} return array;}, []),
+            // genres: genres => {return genres.reduce((array, genre) => movie.genre_ids.includes(genre.id) && array.push(genre.name));},
+            vote_average: movie.vote_average,
+            vote_count: movie.vote_count,
+          }))
+        );
+      })
+      .catch(() => {
+        setState(prevState => {
+          return { ...prevState, error: true };
+        });
+      })
+      .finally(() =>
+        setState(prevState => {
+          return { ...prevState, loading: false };
+        })
+      );
+      // console.log(results);
+
+  // }, [filter, page]);
+
+  }, [genres, page]);
+
+  const handleSubmit = event => {
+    const {
+      filter: { value },
+    } = event.target.elements;
+    if (value !== filter) {
+    setFilter(value);
+    setMovie([]);
+    setPages({ page: 1, totalPage: 0 });
+    setState({ modalShow: false, loading: false, error: false });
+    }
+  };
+
+  const pagination = event => {
+    let nextPage = page;
+    let {
+      target: { text },
+    } = event;
+    if (!text) text = event.target.innerHTML;
+    if (text.includes('…')) return;
+    if (Number.isInteger(Number(text))) nextPage = Number(text);
+    if (text.includes('›')) ++nextPage;
+    if (text.includes('‹')) --nextPage;
+    setPages(prevPages => {
+      return { ...prevPages, page: nextPage };
+    });
+  };
+
+  const modalOpen = (modalUrl, modalAlt) => {
+    setModal({ modalUrl, modalAlt });
+    modalToggle();
+  };
+
+  // const modalToggle = () => {
+  //   document.querySelector('body').classList.toggle('no-scroll');
+  //   setState(prevState => {
+  //     return { ...prevState, modalShow: !modalShow };
+  //   });
+  // };
+
+  const { modalShow, loading, error } = state;
+  // const { modalUrl, modalAlt } = modal;
+  console.log(movies);
+
+
+  return (
+    <>
+      <Searchbar formSubmit={handleSubmit} />
+      {loading && <Loader />}
+      {movies.length && !loading && (
+        <ImageGallery movies={movies} onClick={modalOpen} />
+      )}
+      {movies.length && !loading && (
+        <Buttons onPagination={pagination} total={totalPage} curent={page} />
+      )}
+      {!movies.length && !loading && (
+        <Notification
+          message={
+            error
+              ? 'Something went wrong, please try again.'
+              : 'Images not found'
+          }
+        />
+      )}
+      {/* {modalShow && (
+        <Modal onClose={modalToggle}>
+          <img src={modalUrl} alt={modalAlt} />
+        </Modal>
+      )} */}
+    </>
+  );
+};
+
+export default App;

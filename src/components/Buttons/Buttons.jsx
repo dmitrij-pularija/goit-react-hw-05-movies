@@ -1,6 +1,6 @@
 import Pagination from 'react-bootstrap/Pagination';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Box } from './Buttons.styled';
+import { Block } from './Buttons.styled';
 import PropTypes from 'prop-types';
 
 const Buttons = ({ total, curent, onPagination }) => {
@@ -66,9 +66,9 @@ const Buttons = ({ total, curent, onPagination }) => {
   if (curent !== total && total > 9) items.push(<Pagination.Next key="n2" />);
 
   return (
-    <Box>
+    <Block>
       <Pagination onClick={event => onPagination(event)}>{items}</Pagination>
-    </Box>
+    </Block>
   );
 };
 

@@ -11,7 +11,8 @@ export const Message = styled.p`
   padding-top: 15px;
 
   @media screen and (min-width: 480px) {
-    height: 95vh;
+    height: 150px;
+    // height: 100vh;
     padding: 0;
   }
 `;

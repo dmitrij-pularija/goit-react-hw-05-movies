@@ -16,7 +16,7 @@ export const Overlay = styled.div`
 export const Mod = styled.div`
   position: relative;
   max-width: 80vw;
-  max-height: 95vh;
+  max-height: 90vh;
 `;
 
 export const Close = styled.button`
