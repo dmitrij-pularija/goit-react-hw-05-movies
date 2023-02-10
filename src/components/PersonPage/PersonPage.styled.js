@@ -5,22 +5,23 @@ width: 850px;
 max-height: 90vh;
 // height: 700px;
 
-  padding: 15px;
+  padding: 40px 15px 15px 15px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  // flex-direction: column;
+  align-items: flex-start;
 justify-content: center;
 border-radius: 10px;
-background-color: #ffffff;
+background-color: #ffffeb;
 overflow-x: hidden;
 overflow-y: auto;
+gap: 15px;
 `;
 
 export const Photo = styled.img`
 display: block;
-max-width: 100%;
+width: 100%;
 height: auto;
-width: 200px;
+// width: 300px;
 object-fit: cover;
 border-radius: 5px;
 overflow: hidden;
@@ -33,9 +34,9 @@ align-items: stretch;
 justify-content: center;
 width: 100%;
 font-weight: 700;
-font-size: 32px;
+font-size: 28px;
 line-height: 1;
-padding: 0;
+padding: 15px 0 10px 0;
 // margin: 20px auto;
 `;
 
@@ -47,7 +48,7 @@ text-align: center;
 width: 100%;
 padding: 0;
 margin: 0 auto;
-gap: 15px;
+// gap: 15px;
 `;
 
 export const Birthday = styled.div`
@@ -57,8 +58,7 @@ justify-content: center;
 width: 100%;
 padding: 0;
 margin: 0 auto;
-gap: 15px;
-
+// gap: 15px;
 `;
 
 export const Place = styled.div`
@@ -68,15 +68,25 @@ justify-content: center;
 width: 100%;
 padding: 0;
 margin: 0 auto;
-gap: 15px;
+// gap: 15px;
 
 `;
 
 export const Biography = styled.div`
 display: flex;
-width: 100%;
-max-height: 450px;
+flex-direction: column;
+align-items: flex-start;
+width: 60%;
+max-height: 625px;
+// height: 100%;
+line-height: 1.1;
+gap: 5px;
+`;
 
+export const Text = styled.div`
+display: flex;
+width: 100%;
+max-height: 630px;
 // height: 100%;
 overflow-x: hidden;
 overflow-y: auto;
@@ -86,27 +96,33 @@ line-height: 1.1;
 
 export const Param = styled.span`
 display: flex;
-justify-content: flex-end;
-width: 50%;
+align-items: center;
+justify-content: flex-start;
+width: 35%;
 font-weight: 700;
+font-size: 16px;
 `;
 
 export const Value = styled.span`
 display: flex;
+align-items: center;
 justify-content: flex-start;
-width: 50%;
-font-weight: 700;
+width: 65%;
+font-size: 16px;
+// font-weight: 700;
 `;
 
 export const Personal = styled.div`
 // height: 158px;
 height: 100%;
-width: 100%;
+width: 40%;
+// width: 100%;
 display: flex;
+flex-direction: column;
 align-items: flex-start;
 justify-content: space-between;
-gap: 15px;
-margin-bottom: 15px; 
+// gap: 15px;
+// margin-bottom: 15px; 
 `;
 
 export const Info = styled.div`
@@ -116,5 +132,6 @@ display: flex;
 flex-direction: column;
 align-items: flex-start;
 justify-content: space-between;
-gap: 15px;
+line-height: 1.2;
+gap: 5px;
 `;

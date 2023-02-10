@@ -1,12 +1,14 @@
 // import PropTypes from 'prop-types';
 import { useRef, useState, useEffect } from "react";
 import { useNavigate, useLocation} from "react-router-dom";
+import { ReactComponent as IconClear } from '../../img/clear.svg';
+import { ReactComponent as IconSearch } from '../../img/search.svg';
 
-import clear from '../../img/clear.svg';
-import search from '../../img/search.svg';
+// import clear from '../../img/clear.svg';
+// import search from '../../img/search.svg';
 // import { ReactComponent as Logo } from '../../img/film.svg';
 
-import { Input, Form, Button, Clear, Icon } from './Searchbar.styled';
+import { Input, Form, Button, Clear } from './Searchbar.styled';
 
 // const Searchbar = ({ formSubmit }) => {
 const Searchbar = () => {
@@ -60,7 +62,7 @@ const Searchbar = () => {
           }}
         />
         <Button type="submit">
-          <Icon src={search} width="18px" />
+          <IconSearch stroke='currentColor' />
         </Button>
         <Clear
           ref={btnRef}
@@ -71,7 +73,7 @@ const Searchbar = () => {
           }}
           title="Сlick to clear filter"
         >
-          <Icon src={clear} width="25px" />
+          <IconClear stroke='currentColor' />
         </Clear>
       </Form>
     // </Header>

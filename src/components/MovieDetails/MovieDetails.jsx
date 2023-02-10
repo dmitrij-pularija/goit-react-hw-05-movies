@@ -1,6 +1,6 @@
 import getMovies from '../../services/Api';
 import { useState, useEffect } from 'react';
-import clear from '../../img/clear.svg';
+import { ReactComponent as IconClose } from '../../img/clear.svg';
 import { useParams, Outlet, useLocation } from 'react-router-dom';
 import Notification from '../Notification/Notification';
 import Trailer from '../Trailer/Trailer';
@@ -8,7 +8,7 @@ import Modal from '../Modal/Modal';
 
 import noPoster from '../../img/unknown.jpg';
 import { ReactComponent as IconPlay } from '../../img/play.svg';
-import { CardDetails, Poster, MovieInfo, Overview, Link, Close, IconClose, Main, Add, Name, List, Item, Param, Value, Vote, Url, Play, Image } from './MovieDetails.styled';
+import { CardDetails, Poster, MovieInfo, Overview, Link, Close , Main, Add, Name, List, Item, Param, Value, Vote, Url, Play, Image } from './MovieDetails.styled';
 
 
 const MovieDetails = () => {
@@ -48,11 +48,7 @@ const MovieDetails = () => {
           .then(({results}) => 
           setTrailer(results.filter(res => res.type === "Trailer" && res.site === "YouTube"))
           )
-          .catch(() => {
-            // setState(prevState => {
-            //   return { ...prevState, error: true };
-            // });
-          })
+          .catch(() => setTrailer([]))
       }, [moviesId]);
 
       const modalToggle = () => {
@@ -81,7 +77,7 @@ const locationFrom = location?.state?.from ?? '/';
       <>
       {!loading && 
       <CardDetails>
-        <Close to={locationFrom} title="Сlick to back"><IconClose src={clear} width="25px" /> </Close>
+        <Close to={locationFrom} title="Сlick to back"><IconClose  stroke='currentColor' /></Close>
         {!error  ? (
         <Main>
           <Poster>
@@ -132,4 +128,3 @@ const locationFrom = location?.state?.from ?? '/';
   };
 
 export default MovieDetails;
-{/* <div>{production_companies.map(companie => <div><img src={"https://image.tmdb.org/t/p/w500"+companie.logo_path} alt='' width="30px" height="30px" /><div>{companie.name}</div></div>)}</div> */}

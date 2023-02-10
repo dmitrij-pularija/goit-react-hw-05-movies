@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
-import clear from '../../img/clear.svg';
-import { Overlay, Mod, Close, IconClose } from './Modal.styled';
+import { ReactComponent as IconClose } from '../../img/clear.svg';
+import { Overlay, Mod, Close } from './Modal.styled';
 
 const Modal = ({ onClose, children }) => {
   useEffect(() => {
@@ -26,7 +26,7 @@ const Modal = ({ onClose, children }) => {
       <Mod>
         {children}
         <Close onClick={onClose} title="Сlick to close">
-          <IconClose src={clear} width="25px" />
+          <IconClose stroke="currentColor" />
         </Close>
       </Mod>
     </Overlay>

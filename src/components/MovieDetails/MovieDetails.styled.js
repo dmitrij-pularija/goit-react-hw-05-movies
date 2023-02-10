@@ -6,11 +6,15 @@ position: relative;
   width: 850px;
 min-height: 500px;
   margin: 75px auto 15px auto;
+  // margin: auto;
+
   padding: 30px 15px 15px 15px;
 //   height: 50px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  // align-items: flex-start;
+  align-items: center;
+
 justify-content: center;
 // border: 1px solid black;
 border-radius: 10px;
@@ -23,7 +27,7 @@ box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
 export const Poster = styled.div`
 position: relative;
 display: flex;
-margin-top: 10px;
+// margin-top: 10px;
 height: 100%;
 width: 450px;
 // object-fit: cover;
@@ -87,6 +91,7 @@ export const Name = styled.div`
   // align-items: flex-start;
   // justify-content: flex-start;
   font-weight: 700;
+  line-height: 1;
   font-size: 32px;
 `;
 
@@ -157,32 +162,37 @@ font-weight: 700;
 // `;
 
 export const Close = styled(NavLink)`
+width: 30px;
+height: 30px;
   position: absolute;
   top: 10px;
   right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: inherit;
   border: 1px solid #212121;
+  color: #212121;
   cursor: pointer;
   margin: 0;
   padding: 0;
   border-radius: 50%;
   transition: cubic-bezier(0.4, 0, 0.2, 1) 250ms;
+  
   &:focus,
   &:hover {
     transform: scale(1.05);
     border: 1px solid #f32013;
-    // color: #f32013;
-  // fill: #f32013;
-  // stroke: #f32013;
+    color: #f32013;
   }
 `;
 
-export const IconClose = styled.img`
-  pointer-events: none;
+// export const IconClose = styled.img`
+  // pointer-events: none;
   // fill: #f32013;
   // stroke: currentColor;
   // fill: currentColor;
-`;
+// `;
 
 export const Add = styled.div`
   width: 100%;

@@ -1,4 +1,5 @@
 import noPhoto from '../../img/actor.jpg';
+import Notification from '../Notification/Notification';
 import {
   Card,
   Photo,
@@ -10,13 +11,15 @@ import {
   Param,
   Value,
   Personal,
-  Info
+  Info,
+  Text
 } from './PersonPage.styled';
 const PersonPage = ({ person }) => {
 const birthdayData = new Date(person.birthday);
 
   return (
     <>
+{person.name ? (
     <Card>
       <Personal>  
       <Photo
@@ -29,14 +32,16 @@ const birthdayData = new Date(person.birthday);
       />
       <Info>
       <Name>{person.name}</Name>
-      <Popularity><Param>Popularity</Param><Value>{person.popularity && person.popularity.toFixed(2)}</Value></Popularity>
-      <Birthday><Param>Birthday</Param><Value>{birthdayData.toLocaleDateString()}</Value></Birthday>
-      <Place><Param>Place of birth</Param><Value>{person.place_of_birth}</Value></Place>
-      <Param>Biography</Param>
+      {person.popularity && <Popularity><Param>Popularity</Param><Value>{person.popularity.toFixed(2)}</Value></Popularity>}
+      {person.birthday && <Birthday><Param>Birthday</Param><Value>{birthdayData.toLocaleDateString()}</Value></Birthday>}
+      {person.place_of_birth && <Place><Param>Place of birth</Param><Value>{person.place_of_birth}</Value></Place>}
       </Info>
       </Personal>
-      <Biography>{person.biography}</Biography>
+      <Biography>
+      {person.biography && <Param>Biography:</Param>}  
+      <Text>{person.biography}</Text></Biography>
     </Card>
+    ) : <Card><Notification message={'Something went wrong, please try again.'}/></Card>}
     </>
   );
 };

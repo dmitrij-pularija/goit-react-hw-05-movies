@@ -51,17 +51,22 @@ export const Input = styled.input`
 
 export const Button = styled.button`
   position: absolute;
-  left: 0;
+  width: 50px;
+  height: 50px;
+  left: -7px;
   display: flex;
-  padding: 10px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
   border: none;
   background: none;
-  fill: #3d3c3ca6;
+  color: #3d3c3ca6;
   transition: transform cubic-bezier(0.4, 0, 0.2, 1) 250ms;
 
   &:hover,
   &:focus {
-    fill: #212121;
+    color: #3575f5;
     transform: scale(1.3);
   }
 `;
@@ -74,17 +79,21 @@ export const Icon = styled.img`
 
 export const Clear = styled.button`
   position: absolute;
+  width: 38px;
+height: 38px;
   right: 0;
   display: none;
-  padding: 10px;
+  align-items: center;
+  justify-content: center;
+  // padding: 10px;
   border: none;
   background: none;
-  fill: #3d3c3ca6;
+  color: #3d3c3ca6;
   transition: transform cubic-bezier(0.4, 0, 0.2, 1) 250ms;
 
   &:hover,
   &:focus {
-    fill: #212121;
+    color: #f32013;
     transform: scale(1.3);
   }
 `;
