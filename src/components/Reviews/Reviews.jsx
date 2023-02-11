@@ -6,7 +6,6 @@ import Notification from '../Notification/Notification';
 import ReviewsItem from './ReviewsItem';
 import { Gallery, Back } from './ReviewsItem.styled';
 
-
 const Reviews = () => {
   const [movies, setMovie] = useState([]);
   const [state, setState] = useState({ loading: false, error: false });
@@ -35,11 +34,8 @@ const Reviews = () => {
       }, [moviesId]);
 
   const { loading, error } = state;
-
-      console.log("Reviews!", movies);
   const location = useLocation();
   let reviews = [];
-  // const locationFrom = location?.state?.from  '/';
   if (movies) {reviews = movies.sort((firstReviews, secondReviews) => new Date(secondReviews.updated_at) - new Date(firstReviews.updated_at));};
 console.log(location);
     return (
@@ -69,5 +65,3 @@ console.log(location);
   };
 
 export default Reviews;
-
-

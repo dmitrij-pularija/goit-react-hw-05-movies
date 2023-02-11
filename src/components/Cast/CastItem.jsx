@@ -1,30 +1,27 @@
-// import PropTypes from 'prop-types';
-import { useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { GalleryItem, Image, Title, Name, Character } from './CastItem.styled';
 
 const CastItem = ({ id, src, name, character, personInfo }) => {
-  const location = useLocation();
   return (
-    <GalleryItem onClick={() => personInfo(id)} title="Сlick to view person information">
-    {/* <Link to={path} state={{ from: location }}> */}
-      <Image
-        src={src}
-        alt={name}
-        loading="lazy"
-      />
+    <GalleryItem
+      onClick={() => personInfo(id)}
+      title="Сlick to view person information"
+    >
+      <Image src={src} alt={name} loading="lazy" />
       <Title>
-      <Name>{name}</Name>
-      <Character>as {character}</Character>
+        <Name>{name}</Name>
+        <Character>as {character}</Character>
       </Title>
-      {/* </Link>   */}
     </GalleryItem>
   );
 };
 
-// ImageGalleryItem.propTypes = {
-//   onClick: PropTypes.func.isRequired,
-//   src: PropTypes.string.isRequired,
-//   alt: PropTypes.string.isRequired,
-// };
+CastItem.propTypes = {
+  id: PropTypes.number.isRequired,
+  src: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  character: PropTypes.string.isRequired,
+  personInfo: PropTypes.func.isRequired,
+};
 
 export default CastItem;

@@ -72,7 +72,6 @@ const releaseData = new Date(release_date);
 if (genres) {mapGenres = genres.map(genres => genres.name).join(', ');};
 if (production_countries) {mapContries = production_countries.map(countrie => countrie.name).join(', ');};
 const locationFrom = location?.state?.from ?? '/';
-// if (trailer) playRef.current.style.display = 'flex';
     return (
       <>
       {!loading && 

@@ -4,18 +4,15 @@
   "private": true,
   "homepage": "https://dmitrij-pularija.github.io/goit-react-hw-05-movies/",
   "dependencies": {
-    "@vimeo/player": "^2.18.0",
     "axios": "^1.2.4",
     "bootstrap": "^5.2.3",
     "modern-normalize": "^1.1.0",
-    "notiflix": "^3.2.6",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.0",
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.8.0",
     "react-scripts": "5.0.1",
-    "react-slick": "^0.29.0",
     "react-spinners": "^0.13.8",
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.3"
