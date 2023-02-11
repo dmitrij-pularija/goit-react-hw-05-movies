@@ -1,10 +1,11 @@
 import Pagination from 'react-bootstrap/Pagination';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Block } from './Buttons.styled';
+import css from './PaginationBlock.module.css';
 import PropTypes from 'prop-types';
 
 const Buttons = ({ total, curent, onPagination }) => {
   let items = [];
+  let nextPage = curent;
+
   if (curent !== 1 && total > 9) items.push(<Pagination.Prev key="n1" />);
   for (let number = 1; number <= total; number++) {
     items.push(
@@ -65,10 +66,22 @@ const Buttons = ({ total, curent, onPagination }) => {
   }
   if (curent !== total && total > 9) items.push(<Pagination.Next key="n2" />);
 
+  const getPageNumber = event => {
+    let {
+      target: { text },
+    } = event;
+    if (!text) text = event.target.innerHTML;
+    if (text.includes('…')) return;
+    if (Number.isInteger(Number(text))) nextPage = Number(text);
+    if (text.includes('›')) ++nextPage;
+    if (text.includes('‹')) --nextPage;
+    onPagination(nextPage);
+  };
+
   return (
-    <Block>
-      <Pagination onClick={event => onPagination(event)}>{items}</Pagination>
-    </Block>
+    <div className={css.block}>
+      <Pagination onClick={event => getPageNumber(event)}>{items}</Pagination>
+    </div>
   );
 };
 

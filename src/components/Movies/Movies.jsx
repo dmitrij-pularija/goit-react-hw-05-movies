@@ -1,13 +1,13 @@
 import { useSearchParams } from "react-router-dom";
 import getData from '../../services/Api';
 import MoviesGallery from '../MoviesGallery/MoviesGallery';
-import Buttons from '../Buttons/Buttons';
+import Buttons from '../PaginationBlock/PaginationBlock';
 import Notification from '../Notification/Notification';
 import { useState, useEffect } from 'react';
 
 
-const Movies = () => {
-    const [genres, setGenres] = useState([]);
+const Movies = ({genres}) => {
+    // const [genres, setGenres] = useState([]);
     const [movies, setMovie] = useState([]);
   const [filter, setFilter] = useState('');
     const [pages, setPages] = useState(0);
@@ -30,9 +30,9 @@ const Movies = () => {
       setPages(0);
     };
 
-    getData().then((result) => {
-          setGenres(result.genres);
-        });
+    // getData().then((result) => {
+    //       setGenres(result.genres);
+    //     });
       }, [filter, search]);
 
       useEffect(() => {
@@ -72,16 +72,16 @@ const Movies = () => {
     
       }, [genres, page, filter]);
 
-      const pagination = event => {
-        let nextPage = page;
-        let {
-          target: { text },
-        } = event;
-        if (!text) text = event.target.innerHTML;
-        if (text.includes('…')) return;
-        if (Number.isInteger(Number(text))) nextPage = Number(text);
-        if (text.includes('›')) ++nextPage;
-        if (text.includes('‹')) --nextPage;
+      const pagination = nextPage => {
+        // let nextPage = page;
+        // let {
+        //   target: { text },
+        // } = event;
+        // if (!text) text = event.target.innerHTML;
+        // if (text.includes('…')) return;
+        // if (Number.isInteger(Number(text))) nextPage = Number(text);
+        // if (text.includes('›')) ++nextPage;
+        // if (text.includes('‹')) --nextPage;
         setMovie([]);
         setSearchParams({ search: filter, page: nextPage });
         // setPages(prevPages => {
