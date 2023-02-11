@@ -16,7 +16,9 @@ const Home = () => {
     const [state, setState] = useState({ loading: false, error: false });
     // const { totalPage, page } = pages;
     const [searchParams, setSearchParams] = useSearchParams();
-    const page = Number(searchParams.get("page"));
+    // const page = Number(searchParams.get("page"));
+    const getPage = Number(searchParams.get("page"));
+    const page = (getPage ? getPage : 1);
 
     useEffect(() => {
       getData().then((result) => {
@@ -32,7 +34,7 @@ const Home = () => {
         });
         const genresName = genre_ids => genres.reduce((array, genre) => {genre_ids.includes(Number(genre.id)) && array.push(genre.name); return array;}, []);
     
-        getData('trending', page ? page : 1 )
+        getData('trending', page )
           .then(({ results, total_pages }) => {
             setPages(total_pages);
             // setPages(prevPages => {
