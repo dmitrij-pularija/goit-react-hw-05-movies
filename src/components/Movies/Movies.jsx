@@ -10,25 +10,30 @@ const Movies = () => {
     const [genres, setGenres] = useState([]);
     const [movies, setMovie] = useState([]);
   const [filter, setFilter] = useState('');
-    const [pages, setPages] = useState({ page: 1, totalPage: 0 });
+    const [pages, setPages] = useState(0);
     const [state, setState] = useState({ loading: false, error: false });
-    const [searchParams] = useSearchParams();
-  
-    const { totalPage, page } = pages;
+    const [searchParams, setSearchParams] = useSearchParams();
+    const search = searchParams.get("search");
+    const getPage = Number(searchParams.get("page"));
+    const page = (getPage ? getPage : 1);
+    // !getPage && setFilter('');
+    // const { totalPage } = pages;
+    // !search && setMovie([]);
+
 
 
     useEffect(() => {
-      const search = searchParams.get("search");
+
       if (search && search !== filter) {
       setFilter(search);
       setMovie([]);
-      setPages({ page: 1, totalPage: 0 });
+      setPages(0);
     };
 
     getData().then((result) => {
           setGenres(result.genres);
         });
-      }, [filter, searchParams]);
+      }, [filter, search]);
 
       useEffect(() => {
   if (filter) {
@@ -40,9 +45,7 @@ const Movies = () => {
         const genresName = genre_ids => genres.reduce((array, genre) => {genre_ids.includes(Number(genre.id)) && array.push(genre.name); return array;}, []);
         getData('movies', page, filter)
           .then(({ results, total_pages }) => {
-            setPages(prevPages => {
-              return { ...prevPages, totalPage: total_pages };
-            });
+            setPages(total_pages);
             setMovie(
               results.map(movie => ({
                 id: movie.id,
@@ -80,9 +83,10 @@ const Movies = () => {
         if (text.includes('›')) ++nextPage;
         if (text.includes('‹')) --nextPage;
         setMovie([]);
-        setPages(prevPages => {
-          return { ...prevPages, page: nextPage };
-        });
+        setSearchParams({ search: filter, page: nextPage });
+        // setPages(prevPages => {
+        //   return { ...prevPages, page: nextPage };
+        // });
       };  
 
     const { loading, error } = state;
@@ -92,7 +96,7 @@ const Movies = () => {
         <MoviesGallery movies={movies} />
       )}
       {movies.length && !loading && (
-        <Buttons onPagination={pagination} total={totalPage} curent={page} />
+        <Buttons onPagination={pagination} total={pages} curent={page} />
       )}
       {filter && !movies.length && !loading && (
         <Notification

@@ -21,7 +21,14 @@ const MovieDetails = () => {
   const [trailer, setTrailer] = useState([]);
   const [state, setState] = useState({ modalShow: false, loading: false, error: false});
   let { moviesId } = useParams();
+  const [from, setFrom] = useState('');
   const location = useLocation();
+  
+  if (!from)  {
+  const { pathname, search } = location.state.from;
+  setFrom(pathname+search);
+  }
+
   // const playTrailer = () =>  setState(prevState => {
   //   return { ...prevState, play: true };
 
@@ -76,12 +83,14 @@ const { release_date, title, budget, runtime, homepage, vote_average, vote_count
 const releaseData = new Date(release_date);
 if (genres) {mapGenres = genres.map(genres => genres.name).join(', ');};
 if (production_countries) {mapContries = production_countries.map(countrie => countrie.name).join(', ');};
-const locationFrom = location?.state?.from ?? '/';
+// const locationFrom = location?.state?.from ?? '/';
+// console.log(locationFrom);
+console.log(location);
     return (
       <>
       {!loading && 
       <CardDetails>
-        <Close to={locationFrom} title="Сlick to back"><IconClose  stroke='currentColor' /></Close>
+        <Close to={from} title="Сlick to back"><IconClose  stroke='currentColor' /></Close>
         {!error  ? (
         <Main>
           <Poster>

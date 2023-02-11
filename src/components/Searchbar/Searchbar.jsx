@@ -1,21 +1,13 @@
-// import PropTypes from 'prop-types';
 import { useRef, useState, useEffect } from "react";
 import { useNavigate, useLocation} from "react-router-dom";
 import { ReactComponent as IconClear } from '../../img/clear.svg';
 import { ReactComponent as IconSearch } from '../../img/search.svg';
-
-// import clear from '../../img/clear.svg';
-// import search from '../../img/search.svg';
-// import { ReactComponent as Logo } from '../../img/film.svg';
-
 import { Input, Form, Button, Clear } from './Searchbar.styled';
 
-// const Searchbar = ({ formSubmit }) => {
 const Searchbar = () => {
   const btnRef = useRef();
   const inpRef = useRef();
   const formRef = useRef();
-
   const [filter, setFilter] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
@@ -24,10 +16,11 @@ const Searchbar = () => {
   //   location.pathname.includes("movies") ? formRef.current.style.display = 'flex' : formRef.current.style.display = 'none';
   // }, [location]);
   useEffect(() => {
-    console.log(location.pathname);    
-    filter && (location.pathname.endsWith("movies")) && navigate(`/movies/?search=${filter}`);
-    (location.pathname.endsWith("movies") || location.pathname.endsWith("movies/")) ? formRef.current.style.display = 'flex' : formRef.current.style.display = 'none';
-  }, [filter,location, navigate]);
+    // console.log(location.pathname);    
+    // filter && (location.pathname.endsWith("movies")) && navigate(`/movies?search=${filter}&page=1`);
+    if (location.pathname.endsWith("movies")) {formRef.current.style.display = 'flex';} else {formRef.current.style.display = 'none'; setFilter('');};
+    // (location.pathname.endsWith("movies") || location.pathname.endsWith("movies/")) ? formRef.current.style.display = 'flex' : formRef.current.style.display = 'none';
+  }, [location, filter, navigate]);
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -36,8 +29,7 @@ const Searchbar = () => {
     } = event.target.elements;
     if (value !== filter) {
     setFilter(value);
-    value && navigate(`/movies/?search=${value}`);
-    console.log(value, filter);
+    value && navigate(`/movies?search=${value}&page=1`);
   };
   };
 
@@ -79,9 +71,5 @@ const Searchbar = () => {
     // </Header>
   );
 };
-
-// Searchbar.propTypes = {
-//   formSubmit: PropTypes.func.isRequired,
-// };
 
 export default Searchbar;

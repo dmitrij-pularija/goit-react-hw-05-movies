@@ -1,19 +1,22 @@
+import { useState, useEffect } from 'react';
+import { useSearchParams } from "react-router-dom";
 import getData from '../../services/Api';
 import MoviesGallery from '../MoviesGallery/MoviesGallery';
 // import { Container } from '../SharedLayout/SharedLayout.styled';
 import Buttons from '../Buttons/Buttons';
 // import Loader from './Loader/Loader';
 import Notification from '../Notification/Notification';
-import { useState, useEffect } from 'react';
+
 
 const Home = () => {
     const [genres, setGenres] = useState([]);
     const [movies, setMovie] = useState([]);
-    const [pages, setPages] = useState({ page: 1, totalPage: 0 });
+    const [pages, setPages] = useState(0);
+    // const [pages, setPages] = useState({ page: 1, totalPage: 0 });
     const [state, setState] = useState({ loading: false, error: false });
-    
-    const { totalPage, page } = pages;
-
+    // const { totalPage, page } = pages;
+    const [searchParams, setSearchParams] = useSearchParams();
+    const page = Number(searchParams.get("page"));
 
     useEffect(() => {
       getData().then((result) => {
@@ -29,11 +32,12 @@ const Home = () => {
         });
         const genresName = genre_ids => genres.reduce((array, genre) => {genre_ids.includes(Number(genre.id)) && array.push(genre.name); return array;}, []);
     
-        getData('trending', page)
+        getData('trending', page ? page : 1 )
           .then(({ results, total_pages }) => {
-            setPages(prevPages => {
-              return { ...prevPages, totalPage: total_pages };
-            });
+            setPages(total_pages);
+            // setPages(prevPages => {
+            //   return { ...prevPages, totalPage: total_pages };
+            // });
             setMovie(
               results.map(movie => ({
                 id: movie.id,
@@ -70,10 +74,12 @@ const Home = () => {
         if (text.includes('›')) ++nextPage;
         if (text.includes('‹')) --nextPage;
         setMovie([]);
-        setPages(prevPages => {
-          return { ...prevPages, page: nextPage };
+        setSearchParams({ page: nextPage });
 
-        });
+        // setPages(prevPages => {
+        //   return { ...prevPages, page: nextPage };
+
+        // });
       };  
 
     const { loading, error } = state;
@@ -85,7 +91,7 @@ const Home = () => {
         <MoviesGallery movies={movies} />
       )}
       {movies.length && !loading && (
-        <Buttons onPagination={pagination} total={totalPage} curent={page} />
+        <Buttons onPagination={pagination} total={pages} curent={page} />
       )}
       {!movies.length && !loading && (
         <Notification
