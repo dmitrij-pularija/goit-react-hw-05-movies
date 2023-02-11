@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-import getMovies from '../../services/Api';
+import getData from '../../services/Api';
 import CastItem from './CastItem';
 // import Loader from '../Loader/Loader';
 import { Gallery } from './CastItem.styled';
@@ -28,7 +28,7 @@ const Cast = () => {
       return { ...prevState, loading: true };
     });
 
-    getMovies('credits', 1, moviesId)
+    getData('credits', 1, moviesId)
       .then(results => setMovie(results.cast))
       .catch(() => {
         setState(prevState => {

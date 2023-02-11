@@ -1,4 +1,4 @@
-import getMovies from '../../services/Api';
+import getData from '../../services/Api';
 import MoviesGallery from '../MoviesGallery/MoviesGallery';
 // import { Container } from '../SharedLayout/SharedLayout.styled';
 import Buttons from '../Buttons/Buttons';
@@ -16,7 +16,7 @@ const Home = () => {
 
 
     useEffect(() => {
-      getMovies().then((result) => {
+      getData().then((result) => {
           setGenres(result.genres);
         });
       }, []);
@@ -29,7 +29,7 @@ const Home = () => {
         });
         const genresName = genre_ids => genres.reduce((array, genre) => {genre_ids.includes(Number(genre.id)) && array.push(genre.name); return array;}, []);
     
-        getMovies('trending', page)
+        getData('trending', page)
           .then(({ results, total_pages }) => {
             setPages(prevPages => {
               return { ...prevPages, totalPage: total_pages };

@@ -86,10 +86,10 @@ gap: 5px;
 export const Text = styled.div`
 display: flex;
 width: 100%;
-max-height: 630px;
+// height: 610px;
 // height: 100%;
-// overflow-x: hidden;
-// overflow-y: auto;
+overflow-x: hidden;
+overflow-y: auto;
 text-align: justify;
 line-height: 1.1;
 `;

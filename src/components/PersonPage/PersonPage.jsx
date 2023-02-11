@@ -1,5 +1,5 @@
 import noPhoto from '../../img/actor.jpg';
-import getMovies from '../../services/Api';
+import getData from '../../services/Api';
 import { useEffect, useState } from 'react';
 import Loader from '../Loader/Loader';
 import Notification from '../Notification/Notification';
@@ -15,9 +15,9 @@ import {
   Value,
   Personal,
   Info,
-  Text
+  Text,
 } from './PersonPage.styled';
-const PersonPage = ({personId}) => {
+const PersonPage = ({ personId }) => {
   const [person, setPerson] = useState([]);
   const [state, setState] = useState({
     loading: false,
@@ -30,7 +30,7 @@ const PersonPage = ({personId}) => {
         return { ...prevState, loading: true };
       });
 
-      getMovies('person', 1, personId)
+      getData('person', 1, personId)
         .then(results => setPerson(results))
         .catch(() => {
           setState(prevState => {
@@ -45,40 +45,72 @@ const PersonPage = ({personId}) => {
     }
   }, [personId]);
 
+  const { loading, error } = state;
+  const {
+    profile_path,
+    name,
+    popularity,
+    birthday,
+    place_of_birth,
+    biography,
+  } = person;
+  const birthdayData = new Date(birthday);
 
-const birthdayData = new Date(person.birthday);
-const { loading, error } = state;
-console.log(person);
-console.log(loading, error);
   return (
     <>
-    <Card>
-    {loading && <Loader />}
-{!loading && person ? (
-  <>
-    <Personal>  
-      <Photo
-        src={
-          person.profile_path
-            ? 'https://image.tmdb.org/t/p/w342' + person.profile_path
-            : noPhoto
-        }
-        alt={person.name}
-      />
-      <Info>
-      <Name>{person.name}</Name>
-      {person.popularity && <Popularity><Param>Popularity</Param><Value>{person.popularity.toFixed(2)}</Value></Popularity>}
-      {person.birthday && <Birthday><Param>Birthday</Param><Value>{birthdayData.toLocaleDateString()}</Value></Birthday>}
-      {person.place_of_birth && <Place><Param>Place of birth</Param><Value>{person.place_of_birth}</Value></Place>}
-      </Info>
-      </Personal>
-      {person.biography && <Biography><Param>Biography:</Param> <Text>{person.biography}</Text></Biography>}
-      </>
-      ) : (!loading &&
-              <Notification
-          message={ error ? 'Something went wrong, please try again.' : 'Cast info not found' }
-        />)}
-    </Card>
+      <Card>
+        {loading && <Loader />}
+        {!loading && person ? (
+          <>
+            <Personal>
+              <Photo
+                src={
+                  profile_path
+                    ? 'https://image.tmdb.org/t/p/w342' + profile_path
+                    : noPhoto
+                }
+                alt={name}
+              />
+              <Info>
+                <Name>{person.name}</Name>
+                {popularity && (
+                  <Popularity>
+                    <Param>Popularity</Param>
+                    <Value>{popularity.toFixed(2)}</Value>
+                  </Popularity>
+                )}
+                {birthday && (
+                  <Birthday>
+                    <Param>Birthday</Param>
+                    <Value>{birthdayData.toLocaleDateString()}</Value>
+                  </Birthday>
+                )}
+                {place_of_birth && (
+                  <Place>
+                    <Param>Place of birth</Param>
+                    <Value>{place_of_birth}</Value>
+                  </Place>
+                )}
+              </Info>
+            </Personal>
+            {biography && (
+              <Biography>
+                <Param>Biography:</Param> <Text>{biography}</Text>
+              </Biography>
+            )}
+          </>
+        ) : (
+          !loading && (
+            <Notification
+              message={
+                error
+                  ? 'Something went wrong, please try again.'
+                  : 'Cast info not found'
+              }
+            />
+          )
+        )}
+      </Card>
     </>
   );
 };

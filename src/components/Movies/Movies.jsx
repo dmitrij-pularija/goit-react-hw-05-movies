@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router-dom";
-import getMovies from '../../services/Api';
+import getData from '../../services/Api';
 import MoviesGallery from '../MoviesGallery/MoviesGallery';
 import Buttons from '../Buttons/Buttons';
 import Notification from '../Notification/Notification';
@@ -25,7 +25,7 @@ const Movies = () => {
       setPages({ page: 1, totalPage: 0 });
     };
 
-      getMovies().then((result) => {
+    getData().then((result) => {
           setGenres(result.genres);
         });
       }, [filter, searchParams]);
@@ -38,7 +38,7 @@ const Movies = () => {
           return { ...prevState, loading: true };
         });
         const genresName = genre_ids => genres.reduce((array, genre) => {genre_ids.includes(Number(genre.id)) && array.push(genre.name); return array;}, []);
-        getMovies('movies', page, filter)
+        getData('movies', page, filter)
           .then(({ results, total_pages }) => {
             setPages(prevPages => {
               return { ...prevPages, totalPage: total_pages };
@@ -86,11 +86,6 @@ const Movies = () => {
       };  
 
     const { loading, error } = state;
-
-
-
-
-
     return (
       <>
       {movies.length && !loading && (

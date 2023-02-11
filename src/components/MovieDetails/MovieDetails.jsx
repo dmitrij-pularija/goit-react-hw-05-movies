@@ -1,16 +1,19 @@
-import getMovies from '../../services/Api';
+import getData from '../../services/Api';
 import { useState, useEffect } from 'react';
-// import { Suspense } from 'react';
-// import Loader from '../Loader/Loader';
+import { lazy } from 'react';
+
+import { Suspense } from 'react';
+import Loader from '../Loader/Loader';
 import { ReactComponent as IconClose } from '../../img/clear.svg';
 import { useParams, Outlet, useLocation } from 'react-router-dom';
 import Notification from '../Notification/Notification';
-import Trailer from '../Trailer/Trailer';
+// import Trailer from '../Trailer/Trailer';
 import Modal from '../Modal/Modal';
 
 import noPoster from '../../img/unknown.jpg';
 import { ReactComponent as IconPlay } from '../../img/play.svg';
 import { CardDetails, Poster, MovieInfo, Overview, Link, Close , Main, Add, Name, List, Item, Param, Value, Vote, Url, Play, Image } from './MovieDetails.styled';
+const Trailer = lazy(() => import('../Trailer/Trailer'));
 
 
 const MovieDetails = () => {
@@ -31,7 +34,7 @@ const MovieDetails = () => {
     });
 
 
-    getMovies('details', 1, moviesId)
+    getData('details', 1, moviesId)
           .then( results => 
             setMovie(results)
           )
@@ -46,7 +49,7 @@ const MovieDetails = () => {
             })
           );
 
-    getMovies('trailer', 1, moviesId)
+          getData('trailer', 1, moviesId)
           .then(({results}) => 
           setTrailer(results.filter(res => res.type === "Trailer" && res.site === "YouTube"))
           )
@@ -123,7 +126,9 @@ const locationFrom = location?.state?.from ?? '/';
 }
 {modalShow && (
         <Modal onClose={modalToggle}>
+      <Suspense fallback={<Loader />}>
           <Trailer src={trailer[0].key}/>
+      </Suspense> 
         </Modal>
       )}
 </>

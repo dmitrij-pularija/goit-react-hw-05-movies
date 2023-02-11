@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { ReactComponent as Icon } from '../../img/back.svg';
-import getMovies from '../../services/Api';
+import getData from '../../services/Api';
 import Notification from '../Notification/Notification';
 // import Loader from '../Loader/Loader';
 import ReviewsItem from './ReviewsItem';
@@ -17,7 +17,7 @@ const Reviews = () => {
       return { ...prevState, loading: true };
     });
 
-    getMovies('reviews', 1, moviesId)
+    getData('reviews', 1, moviesId)
           .then(({ results }) => 
             setMovie(results)
           )
