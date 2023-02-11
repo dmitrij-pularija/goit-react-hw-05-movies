@@ -6,7 +6,7 @@ const Trailer = ({src}) => {
 // player.on();
     return (
         <>
-    <iframe width="850" height="650" src={"https://www.youtube.com/embed/"+src}
+    <iframe width="850" height="480" src={"https://www.youtube.com/embed/"+src}
     title="Video player" 
     // frameborder="0"
     // allow="autoplay; encrypted-media"

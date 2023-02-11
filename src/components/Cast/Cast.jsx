@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import getMovies from '../../services/Api';
 import CastItem from './CastItem';
+// import Loader from '../Loader/Loader';
 import { Gallery } from './CastItem.styled';
 import noPhoto from '../../img/actor.jpg';
 import { ReactComponent as Icon } from '../../img/back.svg';
@@ -12,7 +13,7 @@ import PersonPage from '../PersonPage/PersonPage';
 
 const Cast = () => {
   const [movies, setMovie] = useState([]);
-  const [person, setPerson] = useState([]);
+  // const [person, setPerson] = useState([]);
   const [personId, setId] = useState('');
   const [state, setState] = useState({
     modalShow: false,
@@ -41,26 +42,26 @@ const Cast = () => {
       );
   }, [moviesId]);
 
-  useEffect(() => {
-    if (personId) {
-      setState(prevState => {
-        return { ...prevState, loading: true };
-      });
+  // useEffect(() => {
+  //   if (personId) {
+  //     setState(prevState => {
+  //       return { ...prevState, loading: true };
+  //     });
 
-      getMovies('person', 1, personId)
-        .then(results => setPerson(results))
-        .catch(() => {
-          setState(prevState => {
-            return { ...prevState, error: true };
-          });
-        })
-        .finally(() =>
-          setState(prevState => {
-            return { ...prevState, loading: false };
-          })
-        );
-    }
-  }, [personId]);
+  //     getMovies('person', 1, personId)
+  //       .then(results => setPerson(results))
+  //       .catch(() => {
+  //         setState(prevState => {
+  //           return { ...prevState, error: true };
+  //         });
+  //       })
+  //       .finally(() =>
+  //         setState(prevState => {
+  //           return { ...prevState, loading: false };
+  //         })
+  //       );
+  //   }
+  // }, [personId]);
 
   const personInfo = id => {
     setId(id);
@@ -70,7 +71,7 @@ const Cast = () => {
     document.querySelector('body').classList.toggle('no-scroll');
     if (modalShow) {
       setId('');
-      setPerson([]);
+      // setPerson([]);
     }
     setState(prevState => {
       return { ...prevState, modalShow: !prevState.modalShow };
@@ -82,6 +83,7 @@ const Cast = () => {
 
   return (
     <>
+      {loading && <Notification message={'Casts loading...'}/>}
       {movies.length && !loading ? (
         <Gallery>
           {movies.map(({ id, character, name, profile_path }) => (
@@ -99,7 +101,7 @@ const Cast = () => {
             />
           ))}
         </Gallery>
-      ) : (
+      ) : (!loading && 
         <Notification
           message={
             error ? 'Something went wrong, please try again.' : 'Cast not found'
@@ -111,7 +113,8 @@ const Cast = () => {
       </Back>
       {modalShow && (
         <Modal onClose={modalToggle}>
-          <PersonPage person={person} />
+          <PersonPage personId={personId}/>
+          {/* <PersonPage person={person} /> */}
         </Modal>
       )}
     </>

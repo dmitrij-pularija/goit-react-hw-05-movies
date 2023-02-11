@@ -3,6 +3,7 @@ import { useParams, useLocation } from 'react-router-dom';
 import { ReactComponent as Icon } from '../../img/back.svg';
 import getMovies from '../../services/Api';
 import Notification from '../Notification/Notification';
+// import Loader from '../Loader/Loader';
 import ReviewsItem from './ReviewsItem';
 import { Gallery, Back } from './ReviewsItem.styled';
 
@@ -40,6 +41,7 @@ const Reviews = () => {
 console.log(location);
     return (
       <>
+      {loading && <Notification message={'Reviews loading...'}/>}
       {movies.length && !loading ? (
       <Gallery>
       {movies && reviews.map(({ id, author, content, created_at, author_details }) => (
@@ -52,7 +54,7 @@ console.log(location);
         />
       ))}
     </Gallery>
-       ) : (<Notification
+       ) : (!loading && <Notification
   message={
     error
       ? 'Something went wrong, please try again.'

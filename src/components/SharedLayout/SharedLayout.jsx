@@ -26,6 +26,7 @@ const SharedLayout = () => {
 // console.log(filter);
     return (
       <>
+      {/* <GlobalStyle /> */}
         <Header>
         <Container>
         <Box>    
@@ -40,7 +41,6 @@ const SharedLayout = () => {
         </Header>
         <Container>
         <Suspense fallback={<Loader />}>
-      {/* <GlobalStyle /> */}
         <Outlet />
         </Suspense>
         </Container>
