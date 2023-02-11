@@ -80,15 +80,16 @@ const Cast = () => {
 
   const { modalShow, loading, error } = state;
   const location = useLocation();
+  console.log(movies);
 
   return (
     <>
       {loading && <Notification message={'Casts loading...'}/>}
       {movies.length && !loading ? (
         <Gallery>
-          {movies.map(({ id, character, name, profile_path }) => (
+          {movies.map(({ id, cast_id, character, name, profile_path }) => (
             <CastItem
-              key={id}
+              key={cast_id}
               id={id}
               src={
                 profile_path

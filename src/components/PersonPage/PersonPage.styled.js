@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Card = styled.div`
 width: 850px;
-max-height: 90vh;
+height: 682px;
 // height: 700px;
 
   padding: 40px 15px 15px 15px;
@@ -120,14 +120,15 @@ width: 40%;
 display: flex;
 flex-direction: column;
 align-items: flex-start;
-justify-content: space-between;
+justify-content: center;
+// justify-content: space-between;
 // gap: 15px;
 // margin-bottom: 15px; 
 `;
 
 export const Info = styled.div`
 width: 100%;
-height: 100%;
+// height: 100%;
 display: flex;
 flex-direction: column;
 align-items: flex-start;

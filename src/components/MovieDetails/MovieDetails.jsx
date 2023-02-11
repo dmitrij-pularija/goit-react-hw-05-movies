@@ -1,7 +1,7 @@
 import getMovies from '../../services/Api';
 import { useState, useEffect } from 'react';
-import { Suspense } from 'react';
-import Loader from '../Loader/Loader';
+// import { Suspense } from 'react';
+// import Loader from '../Loader/Loader';
 import { ReactComponent as IconClose } from '../../img/clear.svg';
 import { useParams, Outlet, useLocation } from 'react-router-dom';
 import Notification from '../Notification/Notification';
@@ -115,9 +115,9 @@ const locationFrom = location?.state?.from ?? '/';
   }
   />)}
           <Add>
-        <Suspense fallback={<Loader />}>
+        {/* <Suspense fallback={<Loader />}> */}
         <Outlet />
-        </Suspense>
+        {/* </Suspense> */}
       </Add>
       </CardDetails>
 }
