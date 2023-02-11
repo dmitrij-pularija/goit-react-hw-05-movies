@@ -1,6 +1,6 @@
 // import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
-import { GalleryItem, Link, Image, Title, Reyt, Year, Genre, Name, Info} from './MoviesGallery.styled';
+import { GalleryItem, Link, Image, Title, Reyt, Year, Genre, Name } from './MoviesGallery.styled';
 import noPoster from '../../img/unknown.jpg';
 
 const MoviesGalleryItem = ({ path, src, alt, year, genres, reyt }) => {
@@ -18,14 +18,11 @@ if (genres) {mapGenres = genres.map((genres, index) => cut(genres, index));};
         loading="lazy"
       />
       {!src && <Name>{alt}</Name>}
-      {/* <Info> */}
       <Title>
         <Year>{year}</Year>
         <Genre>{mapGenres && mapGenres}</Genre>
-        {/* <Genre>{genres.map(genres => genres).join(', ')}</Genre> */}
         {reyt>0 && <Reyt>{reyt}</Reyt>}
       </Title>
-      {/* </Info> */}
       </Link>  
     </GalleryItem>
   );
