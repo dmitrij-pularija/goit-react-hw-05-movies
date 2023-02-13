@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkgoit_react_hw_05_movies=self.webpackChunkgoit_react_hw_05_movies||[]).push([[972],{4972:function(e,t,r){r.r(t);var i=r(184);t.default=function(e){var t=e.src;return(0,i.jsx)(i.Fragment,{children:(0,i.jsx)("iframe",{width:"850",height:"480",src:"https://www.youtube.com/embed/"+t,title:"Video player",allow:"fullscreen"})})}}}]);
-//# sourceMappingURL=972.675e2634.chunk.js.map
