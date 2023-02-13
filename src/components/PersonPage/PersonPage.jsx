@@ -1,7 +1,8 @@
-import noPhoto from '../../img/actor.jpg';
-import getData from '../../services/Api';
-import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { memo, useEffect } from 'react';
+import { useQuery } from '../../services/hooks';
 import Loader from '../Loader/Loader';
+import noPhoto from '../../img/actor.jpg';
 import Notification from '../Notification/Notification';
 import {
   Card,
@@ -17,35 +18,18 @@ import {
   Info,
   Text,
 } from './PersonPage.styled';
+
 const PersonPage = ({ personId }) => {
-  const [person, setPerson] = useState([]);
-  const [state, setState] = useState({
-    loading: false,
-    error: false,
-  });
+  const {
+    state: { loading, error },
+    data,
+    dataQuery,
+  } = useQuery();
 
   useEffect(() => {
-    if (personId) {
-      setState(prevState => {
-        return { ...prevState, loading: true };
-      });
+    dataQuery('person', 1, personId);
+  }, [personId, dataQuery]);
 
-      getData('person', 1, personId)
-        .then(results => setPerson(results))
-        .catch(() => {
-          setState(prevState => {
-            return { ...prevState, error: true };
-          });
-        })
-        .finally(() =>
-          setState(prevState => {
-            return { ...prevState, loading: false };
-          })
-        );
-    }
-  }, [personId]);
-
-  const { loading, error } = state;
   const {
     profile_path,
     name,
@@ -53,14 +37,14 @@ const PersonPage = ({ personId }) => {
     birthday,
     place_of_birth,
     biography,
-  } = person;
+  } = data;
   const birthdayData = new Date(birthday);
 
   return (
     <>
       <Card>
         {loading && <Loader />}
-        {!loading && person ? (
+        {!loading && data ? (
           <>
             <Personal>
               <Photo
@@ -72,7 +56,7 @@ const PersonPage = ({ personId }) => {
                 alt={name}
               />
               <Info>
-                <Name>{person.name}</Name>
+                <Name>{name}</Name>
                 {popularity && (
                   <Popularity>
                     <Param>Popularity</Param>
@@ -114,4 +98,9 @@ const PersonPage = ({ personId }) => {
     </>
   );
 };
-export default PersonPage;
+
+PersonPage.propTypes = {
+  personId: PropTypes.number.isRequired,
+};
+
+export default memo(PersonPage);

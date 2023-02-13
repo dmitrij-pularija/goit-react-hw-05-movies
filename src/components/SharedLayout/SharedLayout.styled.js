@@ -37,7 +37,6 @@ export const Box = styled.div`
 `;
 
 export const Logo = styled(NavLink)`
-  // width: 100%;
   width: 156px;
   display: flex;
   align-items: center;
@@ -54,24 +53,21 @@ export const Text = styled.span`
   font-size: 28px;
   color: #ffffff;
 
-    @media screen and (min-width: 480px) {
-        display: flex;
+  @media screen and (min-width: 480px) {
+    display: flex;
   }
 `;
 
 export const Nav = styled.nav`
-  // width: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   column-gap: 10px;
-//   border-bottom: 1px solid #aaabac;
 `;
 
 export const Link = styled(NavLink)`
   display: flex;
   padding: 3px 0;
-//   border-radius: 5px 5px 0 0;
   text-decoration: none;
   color: black;
   font-weight: 700;
@@ -79,20 +75,12 @@ export const Link = styled(NavLink)`
   color: #c9c8c8;
   border-bottom: 3px solid #b5daf4;
 
-//   background-color: #f5f5f5;
-//   border: 1px solid #aaabac;
-
-//   @media screen and (min-width: 400px) {
-//     padding: 8px;
-//     font-size: 18px;
-//   }
-
   &:hover,
   &:focus {
-  color: #ffffff;
-}   
+    color: #ffffff;
+  }
   &.active {
-  color: #ffffff;
+    color: #ffffff;
     border-bottom: 3px solid #ffffff;
   }
 `;

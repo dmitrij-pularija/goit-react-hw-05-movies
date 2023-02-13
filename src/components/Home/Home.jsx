@@ -1,99 +1,63 @@
-import { useState, useEffect } from 'react';
-import { useSearchParams } from "react-router-dom";
-import getData from '../../services/Api';
-import MoviesGallery from '../MoviesGallery/MoviesGallery';
-// import { Container } from '../SharedLayout/SharedLayout.styled';
+import PropTypes from 'prop-types';
+import { memo, useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import PaginationBlock from '../PaginationBlock/PaginationBlock';
-// import Loader from './Loader/Loader';
+import MoviesGallery from '../MoviesGallery/MoviesGallery';
 import Notification from '../Notification/Notification';
+import { useQuery } from '../../services/hooks';
 
+const Home = ({ genres }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const getPage = Number(searchParams.get('page'));
+  const [movies, setMovie] = useState([]);
+  const [pages, setPages] = useState(0);
+  const page = getPage ? getPage : 1;
+  const {
+    state: { loading, error },
+    data,
+    dataQuery,
+  } = useQuery();
 
-const Home = ({genres}) => {
-      // const [genres, setGenres] = useState([]);
-    const [movies, setMovie] = useState([]);
-    const [pages, setPages] = useState(0);
-      // const [pages, setPages] = useState({ page: 1, totalPage: 0 });
-    const [state, setState] = useState({ loading: false, error: false });
-      // const { totalPage, page } = pages;
-    const [searchParams, setSearchParams] = useSearchParams();
-      // const page = Number(searchParams.get("page"));
-    const getPage = Number(searchParams.get("page"));
-    const page = (getPage ? getPage : 1);
+  useEffect(() => {
+    dataQuery('trending', page, '');
+  }, [page, dataQuery]);
 
-    // useEffect(() => {
-    //   getData().then((result) => {
-    //       setGenres(result.genres);
-    //     });
-    //   }, []);
+  useEffect(() => {
+    const { results, total_pages } = data;
+    if (total_pages) {
+      const genresName = genre_ids =>
+        genres.reduce((array, genre) => {
+          genre_ids.includes(Number(genre.id)) && array.push(genre.name);
+          return array;
+        }, []);
+      setPages(total_pages);
+      setMovie(
+        results.map(movie => ({
+          id: movie.id,
+          poster: movie.poster_path,
+          title: movie.title,
+          release_date: movie.release_date,
+          genres: genresName(movie.genre_ids),
+          vote_average: movie.vote_average,
+        }))
+      );
+    }
+  }, [data, genres]);
 
-
-      useEffect(() => {
-        if (genres) { 
-        setState(prevState => {
-          return { ...prevState, loading: true };
-        });
-        const genresName = genre_ids => genres.reduce((array, genre) => {genre_ids.includes(Number(genre.id)) && array.push(genre.name); return array;}, []);
-    
-        getData('trending', page )
-          .then(({ results, total_pages }) => {
-            setPages(total_pages);
-            // setPages(prevPages => {
-            //   return { ...prevPages, totalPage: total_pages };
-            // });
-            setMovie(
-              results.map(movie => ({
-                id: movie.id,
-                poster: movie.poster_path,
-                title: movie.title,
-                release_date: movie.release_date,
-                genres: genresName(movie.genre_ids),
-                vote_average: movie.vote_average,
-                vote_count: movie.vote_count,
-              }))
-            );
-          })
-          .catch(() => {
-            setState(prevState => {
-              return { ...prevState, error: true };
-            });
-          })
-          .finally(() =>
-            setState(prevState => {
-              return { ...prevState, loading: false };
-            })
-          );
-        }
-      }, [genres, page]);
-
-      const pagination = nextPage => {
-        // let nextPage = page;
-        // let {
-        //   target: { text },
-        // } = event;
-        // if (!text) text = event.target.innerHTML;
-        // if (text.includes('…')) return;
-        // if (Number.isInteger(Number(text))) nextPage = Number(text);
-        // if (text.includes('›')) ++nextPage;
-        // if (text.includes('‹')) --nextPage;
-        setMovie([]);
-        setSearchParams({ page: nextPage });
-
-        // setPages(prevPages => {
-        //   return { ...prevPages, page: nextPage };
-
-        // });
-      };  
-
-    const { loading, error } = state;
-
-    return (
-        <>
-      {/* {loading && <Loader />} */}
+  const pagination = nextPage => {
+    setMovie([]);
+    setSearchParams({ page: nextPage });
+  };
+  
+  return (
+    <>
+      {movies.length && !loading && <MoviesGallery movies={movies} />}
       {movies.length && !loading && (
-        <MoviesGallery movies={movies} />
-      )}
-      {movies.length && !loading && (
-        <PaginationBlock onPagination={pagination} total={pages} curent={page} />
+        <PaginationBlock
+          onPagination={pagination}
+          total={pages}
+          curent={page}
+        />
       )}
       {!movies.length && !loading && (
         <Notification
@@ -104,17 +68,17 @@ const Home = ({genres}) => {
           }
         />
       )}
-      </>
-        );
-    };
-export default Home;
+    </>
+  );
+};
 
-// const Home = () => {
-//     return (
-//       <>
-//       <div>Home!</div>
-//       </>
-//     );
-//   };
+Home.propTypes = {
+  genres: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+};
 
-// export default Home;
+export default memo(Home);

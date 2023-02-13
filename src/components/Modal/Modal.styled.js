@@ -36,7 +36,7 @@ export const Close = styled.button`
   padding: 0;
   border-radius: 50%;
   transition: cubic-bezier(0.4, 0, 0.2, 1) 250ms;
-  
+
   &:focus,
   &:hover {
     transform: scale(1.05);

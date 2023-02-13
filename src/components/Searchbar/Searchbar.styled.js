@@ -1,19 +1,5 @@
 import styled from 'styled-components';
 
-// export const Header = styled.header`
-//   z-index: 1;
-//   position: fixed;
-//   top: 0;
-//   width: 100%;
-//   height: 60px;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   padding: 8px 50px;
-//   background-color: #b5daf4;
-//   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-// `;
-
 export const Form = styled.form`
   position: relative;
   height: 100%;
@@ -80,12 +66,11 @@ export const Icon = styled.img`
 export const Clear = styled.button`
   position: absolute;
   width: 38px;
-height: 38px;
+  height: 38px;
   right: 0;
   display: none;
   align-items: center;
   justify-content: center;
-  // padding: 10px;
   border: none;
   background: none;
   color: #3d3c3ca6;
