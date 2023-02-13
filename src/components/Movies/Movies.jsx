@@ -5,6 +5,7 @@ import Buttons from '../PaginationBlock/PaginationBlock';
 import Notification from '../Notification/Notification';
 import { memo, useState, useEffect } from 'react';
 import { useQuery } from '../../services/hooks';
+import Loader from '../Loader/Loader';
 
 const Movies = ({ genres }) => {
   const [movies, setMovie] = useState([]);
@@ -59,6 +60,7 @@ const Movies = ({ genres }) => {
 
   return (
     <>
+      {loading && <Loader />}
       {movies.length && !loading && <MoviesGallery movies={movies} />}
       {movies.length && !loading && (
         <Buttons onPagination={pagination} total={pages} curent={page} />

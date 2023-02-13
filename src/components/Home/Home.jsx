@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import PaginationBlock from '../PaginationBlock/PaginationBlock';
 import MoviesGallery from '../MoviesGallery/MoviesGallery';
 import Notification from '../Notification/Notification';
+import Loader from '../Loader/Loader';
 import { useQuery } from '../../services/hooks';
 
 const Home = ({ genres }) => {
@@ -48,9 +49,10 @@ const Home = ({ genres }) => {
     setMovie([]);
     setSearchParams({ page: nextPage });
   };
-  
+
   return (
     <>
+      {loading && <Loader />}
       {movies.length && !loading && <MoviesGallery movies={movies} />}
       {movies.length && !loading && (
         <PaginationBlock

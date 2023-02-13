@@ -78,6 +78,7 @@ const MovieDetails = () => {
 
   return (
     <>
+      {loading && <Loader />}
       {!loading && (
         <CardDetails>
           <Close to={from} title="Сlick to back">
