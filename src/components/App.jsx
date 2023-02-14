@@ -1,5 +1,5 @@
 import { lazy, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom';
 import SharedLayout from './SharedLayout/SharedLayout';
 import { useQuery } from '../services/hooks';
 
@@ -19,17 +19,19 @@ const App = () => {
     dataQuery('genres', 1, '');
   }, [dataQuery]);
   return (
-    <Routes>
-      <Route path="/" element={<SharedLayout />}>
-        <Route index element={<Home genres={genres} />} />
-        <Route path="movies" element={<Movies genres={genres} />} />
-        <Route path="movies/:moviesId" element={<MovieDetails />}>
-          <Route path="cast" element={<Cast />} />
-          <Route path="reviews" element={<Reviews />} />
+    <BrowserRouter basename="/goit-react-hw-05-movies">
+      <Routes>
+        <Route path="/" element={<SharedLayout />}>
+          <Route index element={<Home genres={genres} />} />
+          <Route path="movies" element={<Movies genres={genres} />} />
+          <Route path="movies/:moviesId" element={<MovieDetails />}>
+            <Route path="cast" element={<Cast />} />
+            <Route path="reviews" element={<Reviews />} />
+          </Route>
+          <Route path="*" element={<Navigate to="/" replace={true} />} />
         </Route>
-        <Route path="*" element={<Home genres={genres} />} />
-      </Route>
-    </Routes>
+      </Routes>
+    </BrowserRouter>
   );
 };
 
