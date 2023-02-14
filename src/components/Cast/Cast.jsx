@@ -64,7 +64,7 @@ const Cast = () => {
         )
       )}
 
-      <Back to={location.state.from} title="Сlick to back">
+      <Back to={location?.state?.from ?? '/'} title="Сlick to back">
         <Icon fill="white" />
       </Back>
       {modalShow && (
