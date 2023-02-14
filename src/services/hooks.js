@@ -30,6 +30,5 @@ export const useQuery = () => {
 export const useToggle = () => {
   const [modalShow, setmodalShow] = useState(false);
   const modalToggle = () => setmodalShow(modalShow => !modalShow);
-  document.querySelector('body').classList.toggle('no-scroll');
   return { modalShow, modalToggle };
 };
