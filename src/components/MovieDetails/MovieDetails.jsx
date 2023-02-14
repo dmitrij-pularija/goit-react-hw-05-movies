@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { memo, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Outlet, useLocation } from 'react-router-dom';
 import { ReactComponent as IconClose } from '../../img/clear.svg';
 import { ReactComponent as IconPlay } from '../../img/play.svg';
@@ -44,8 +44,8 @@ const MovieDetails = () => {
   } = useQuery();
 
   if (!from) {
-    const { pathname, search } = location.state.from;
-    setFrom(pathname + search);
+    const { pathname, search } = location?.state?.from ?? '';
+    setFrom(pathname ?? '/', search ?? '');
   }
 
   useEffect(() => {
@@ -211,4 +211,4 @@ const MovieDetails = () => {
   );
 };
 
-export default memo(MovieDetails);
+export default MovieDetails;

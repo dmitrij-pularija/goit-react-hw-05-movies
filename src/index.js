@@ -1,4 +1,4 @@
-import { HashRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
 import { StrictMode } from 'react';
 import App from './components/App';
@@ -8,8 +8,8 @@ import './index.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <HashRouter>
+    <BrowserRouter basename="/goit-react-hw-05-movies/">
       <App />
-    </HashRouter>
+    </BrowserRouter>
   </StrictMode>
 );
