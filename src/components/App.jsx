@@ -19,7 +19,6 @@ const App = () => {
     dataQuery('genres', 1, '');
   }, [dataQuery]);
   return (
-    <>
     <Routes>
       <Route path="/" element={<SharedLayout />}>
         <Route index element={<Home genres={genres} />} />
@@ -31,7 +30,6 @@ const App = () => {
         <Route path="*" element={<Home />} />
       </Route>
     </Routes>
-    </>
   );
 };
 
