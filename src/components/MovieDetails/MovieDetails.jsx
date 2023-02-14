@@ -45,7 +45,7 @@ const MovieDetails = () => {
 
   if (!from) {
     const { pathname, search } = location?.state?.from ?? '';
-    setFrom(pathname ?? '/', search ?? '');
+    setFrom((pathname ?? '/') + (search ?? ''));
   }
 
   useEffect(() => {
@@ -196,7 +196,9 @@ const MovieDetails = () => {
             />
           )}
           <Add>
-            <Outlet />
+            <Suspense fallback={<Loader />}>
+              <Outlet />
+            </Suspense>
           </Add>
         </CardDetails>
       )}
