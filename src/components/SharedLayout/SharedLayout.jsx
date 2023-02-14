@@ -16,7 +16,7 @@ import {
 
 const SharedLayout = () => {
   return (
-    <>
+    <div>
       <Header>
         <Container>
           <Box>
@@ -39,7 +39,7 @@ const SharedLayout = () => {
           <Outlet />
         </Container>
       </Suspense>
-    </>
+    </div>
   );
 };
 
